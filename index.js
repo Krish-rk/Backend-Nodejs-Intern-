@@ -58,21 +58,16 @@ app.get("/posts/", async (request, response) => {
 app.post("/posts", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
-      // If no file is uploaded, handle accordingly
       return res.status(400).json({
         success: false,
         message: "No image provided",
       });
     }
 
-    // Upload to Cloudinary
     const uploadResult = await cloudinary.uploader.upload(req.file.path);
-    const image_url = uploadResult.secure_url; // Use secure_url instead of just url
-    console.log(image_url);
-    // Extract the other fields from the request body
+    const image_url = uploadResult.secure_url;
     const { title, description, tag } = req.body;
 
-    // Insert into the database
     const createPostQuery = `
       INSERT INTO
         posts (title, description, tag, image_url)
@@ -86,7 +81,6 @@ app.post("/posts", upload.single("image"), async (req, res) => {
     `;
     await db.run(createPostQuery);
 
-    // Return a success response
     res.status(201).json({
       success: true,
       message: "Post created successfully",
