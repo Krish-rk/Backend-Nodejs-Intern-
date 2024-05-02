@@ -1,0 +1,18 @@
+GET http://localhost:3000/posts/?tag=ART&keyword=ART
+Authorization: Bearer JWT_TOKEN
+
+###
+
+
+POST http://localhost:3000/posts/
+Content-Type: application/json
+
+{
+  "title": "A New Journey",
+  "description": "Exploring the beauty of the world.",
+  "tag": "Travel",
+  "image_url": "https://example.com/image.jpg"  
+}
+
+
+###
